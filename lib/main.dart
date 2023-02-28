@@ -3,6 +3,7 @@ import 'package:adwatcher/controller/redux/middleware.dart';
 import 'package:adwatcher/controller/redux/reducer.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
+import 'package:adwatcher/util/abstract_factory.dart';
 import 'package:adwatcher/view/create_character.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:collection/collection.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 void main() {
-  AdWatcherDatabase database = AdWatcherDatabaseMock.sharedInstance();
+  AdWatcherDatabase database = FactoryProvider.factory.getDatabase();
   AppState state = AppState();
   state.character = database.fetchCharacter();
 
@@ -32,7 +33,7 @@ void main() {
 
   store.onChange.listen((state) {
     if (state.character != null) {
-      AdWatcherDatabaseMock.sharedInstance().saveCharacter(state.character!);
+      FactoryProvider.factory.getDatabase().saveCharacter(state.character!);
     }
   });
 

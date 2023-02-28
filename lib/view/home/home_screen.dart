@@ -17,7 +17,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Character>(builder: (BuildContext context, character, Widget? child) {
-      print("character name: ${character.name}, exp: ${character.exp}");
       return Scaffold(
         body: Center(
           child: Column(

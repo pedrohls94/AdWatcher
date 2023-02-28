@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Consumer<Character?>(builder: (BuildContext context, character, Widget? child) {
-        return character == null ? CreateCharacterWidget() : const HomeScreen();
+        return character == null ? const CreateCharacterScreen() : const HomeScreen();
       }),
     );
   }

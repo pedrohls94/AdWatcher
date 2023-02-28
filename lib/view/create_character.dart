@@ -10,10 +10,16 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
-class CreateCharacterWidget extends StatelessWidget {
-  CreateCharacterWidget({super.key});
+class CreateCharacterScreen extends StatefulWidget {
+  const CreateCharacterScreen({super.key});
+
+  @override
+  State<CreateCharacterScreen> createState() => _CreateCharacterScreenState();
+}
+
+class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
   final nameTextEditingController = TextEditingController();
-  final classSelectionButtonWidget = const ClassSelectionButtonWidget();
+  Role _selectedRole = Role.paladin;
 
   @override
   Widget build(BuildContext context) {
@@ -22,58 +28,54 @@ class CreateCharacterWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 185,
-              child: TextFormField(
-                textAlign: TextAlign.center,
-                inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(20)],
-                controller: nameTextEditingController,
-                decoration: const InputDecoration(
-                  hintText: 'Character Name',
-                  contentPadding: EdgeInsets.only(top: 25),
-                ),
-              ),
-            ),
-            classSelectionButtonWidget,
-            ImageButton(
-              text: "Create",
-              image: ImageAssetProvider.greenButton,
-              onPressed: () {
-                context
-                    .read<Store<AppState>>()
-                    .dispatch(CreateCharacterAction(name: nameTextEditingController.text, role: Role.barbarian)); //FIXME: role should be classSelectionButtonWidget.selectedRole
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(pageBuilder: (_, __, ___) => const HomeScreen()),
-                );
-              },
-            ),
+            characterNameTextField,
+            characterSelectionButtons,
+            buildCreateButton(context),
           ].addSpacing(size: 40),
         ),
       ),
     );
   }
-}
 
-class ClassSelectionButtonWidget extends StatefulWidget {
-  const ClassSelectionButtonWidget({super.key});
-
-  @override
-  State<ClassSelectionButtonWidget> createState() => _ClassSelectionButtonWidgetState();
-}
-
-class _ClassSelectionButtonWidgetState extends State<ClassSelectionButtonWidget> {
-  Role _selectedRole = Role.paladin;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: createClassButtons,
+  SizedBox get characterNameTextField {
+    return SizedBox(
+      width: 185,
+      child: TextFormField(
+        textAlign: TextAlign.center,
+        inputFormatters: <TextInputFormatter>[LengthLimitingTextInputFormatter(20)],
+        controller: nameTextEditingController,
+        decoration: const InputDecoration(
+          hintText: 'Character Name',
+          contentPadding: EdgeInsets.only(top: 25),
+        ),
+      ),
     );
   }
 
-  List<Widget> get createClassButtons {
+  ImageButton buildCreateButton(BuildContext context) {
+    return ImageButton(
+      text: "Create",
+      image: ImageAssetProvider.greenButton,
+      onPressed: () {
+        context
+            .read<Store<AppState>>()
+            .dispatch(CreateCharacterAction(name: nameTextEditingController.text, role: _selectedRole));
+        Navigator.push(
+          context,
+          PageRouteBuilder(pageBuilder: (_, __, ___) => const HomeScreen()),
+        );
+      },
+    );
+  }
+
+  Row get characterSelectionButtons {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: createClassButtons(),
+    );
+  }
+
+  List<Widget> createClassButtons() {
     List<Role> leftClasses = [Role.paladin, Role.barbarian, Role.ranger];
     List<Role> rightClasses = [Role.wizard, Role.druid, Role.bard];
 

@@ -1,4 +1,5 @@
-import 'package:adwatcher/model/attribute.dart';
+import 'package:adwatcher/controller/redux/action.dart';
+import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
 import 'package:adwatcher/model/role.dart';
 import 'package:adwatcher/view/asset_providers/image_asset_provider.dart';
@@ -7,41 +8,32 @@ import 'package:adwatcher/view/home/character_attributes.dart';
 import 'package:adwatcher/view/home/character_level.dart';
 import 'package:flutter/material.dart';
 import 'package:adwatcher/util/extensions/list_extension.dart';
+import 'package:provider/provider.dart';
+import 'package:redux/redux.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
-  final Character character = Character(
-    name: "Yasha",
-    role: Role.barbarian,
-    exp: 1010,
-    attributes: {
-      Attribute.strength: 18,
-      Attribute.dexterity: 16,
-      Attribute.constitution: 14,
-      Attribute.intelligence: 12,
-      Attribute.wisdom: 9,
-      Attribute.charisma: 7,
-    },
-  );
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CharacterImage(),
-            CharacterHeader(characterName: character.name, className: character.role.name),
-            CharacterAttributes(attributes: character.attributes),
-            CharacterLevel(viewModel: CharacterLevelViewModel(character.exp)),
-            const SizedBox(height: 10),
-            const HomeScreenButtons(),
-          ].addSpacing(size: 15),
+    return Consumer<Character>(builder: (BuildContext context, character, Widget? child) {
+      print("character name: ${character.name}, exp: ${character.exp}");
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CharacterImage(),
+              CharacterHeader(characterName: character.name, className: character.role.name),
+              CharacterAttributes(attributes: character.attributes),
+              CharacterLevel(viewModel: CharacterLevelViewModel(character.exp)),
+              const SizedBox(height: 10),
+              const HomeScreenButtons(),
+            ].addSpacing(size: 15),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -78,7 +70,13 @@ class HomeScreenButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ImageButton(text: "Train", image: ImageAssetProvider.selectedBlueButton),
+        ImageButton(
+          text: "Play",
+          image: ImageAssetProvider.greenButton,
+          onPressed: () {
+            context.read<Store<AppState>>().dispatch(AddExperiencePoints(exp: 4));
+          },
+        ),
         ImageButton(text: "Achievements", image: ImageAssetProvider.blueButton),
       ],
     );

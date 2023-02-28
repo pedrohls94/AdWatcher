@@ -1,9 +1,50 @@
+import 'package:adwatcher/controller/database.dart';
+import 'package:adwatcher/controller/redux/middleware.dart';
+import 'package:adwatcher/controller/redux/reducer.dart';
+import 'package:adwatcher/controller/redux/state.dart';
+import 'package:adwatcher/model/character.dart';
 import 'package:adwatcher/view/create_character.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:redux/redux.dart';
 
 void main() {
-  runApp(const MyApp());
+  AdWatcherDatabase database = AdWatcherDatabaseMock.sharedInstance();
+  AppState state = AppState();
+  state.character = database.fetchCharacter();
+
+  final store = Store<AppState>(
+    reducer,
+    initialState: state,
+    middleware: [],
+  );
+
+  StreamProvider<T> fromStoreProvider<T>(T Function(AppState appState) convert) {
+    return StreamProvider<T>(
+      lazy: false,
+      updateShouldNotify: (a, b) => !const DeepCollectionEquality().equals(a, b),
+      create: (_) => store.onChange.map(convert),
+      initialData: convert(store.state),
+    );
+  }
+
+  store.onChange.listen((state) {
+    if (state.character != null) {
+      AdWatcherDatabaseMock.sharedInstance().saveCharacter(state.character!);
+    }
+  });
+
+  final widget = MultiProvider(
+    providers: [
+      fromStoreProvider((appState) => appState.character),
+      Provider.value(value: store),
+    ],
+    child: const MyApp(),
+  );
+
+  runApp(widget);
 }
 
 class MyApp extends StatelessWidget {
@@ -26,26 +67,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      // home: HomeScreen(),
-      home: CreateCharacterWidget()
-    );
-  }
-}
-
-class AppLoadingScreen extends StatelessWidget {
-  const AppLoadingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: const [
-            SizedBox(height: 100),
-            Text("AdWatcher"),
-          ],
-        ),
-      ),
+      home: Consumer<Character?>(builder: (BuildContext context, character, Widget? child) {
+        return character == null ? CreateCharacterWidget() : const HomeScreen();
+      }),
     );
   }
 }

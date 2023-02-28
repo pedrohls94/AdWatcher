@@ -1,13 +1,19 @@
+import 'package:adwatcher/controller/redux/action.dart';
+import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/role.dart';
 import 'package:adwatcher/view/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
+import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adwatcher/util/extensions/list_extension.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:redux/redux.dart';
 
 class CreateCharacterWidget extends StatelessWidget {
   CreateCharacterWidget({super.key});
   final nameTextEditingController = TextEditingController();
+  final classSelectionButtonWidget = const ClassSelectionButtonWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +34,20 @@ class CreateCharacterWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const ClassSelectionButtonWidget(),
-            ImageButton(text: "Create", image: ImageAssetProvider.greenButton),
+            classSelectionButtonWidget,
+            ImageButton(
+              text: "Create",
+              image: ImageAssetProvider.greenButton,
+              onPressed: () {
+                context
+                    .read<Store<AppState>>()
+                    .dispatch(CreateCharacterAction(name: nameTextEditingController.text, role: Role.barbarian)); //FIXME: role should be classSelectionButtonWidget.selectedRole
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => const HomeScreen()),
+                );
+              },
+            ),
           ].addSpacing(size: 40),
         ),
       ),

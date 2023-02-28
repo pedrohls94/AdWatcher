@@ -1,4 +1,5 @@
 import 'package:adwatcher/controller/database.dart';
+import 'package:adwatcher/util/mocks/abstract_factory_mock.dart';
 
 class FactoryProvider {
   static AbstractFactory get factory {
@@ -8,11 +9,4 @@ class FactoryProvider {
 
 abstract class AbstractFactory {
   AdWatcherDatabase getDatabase();
-}
-
-class AbstractFactoryMock implements AbstractFactory {
-  @override
-  AdWatcherDatabase getDatabase() {
-    return AdWatcherDatabaseMock();
-  }
 }

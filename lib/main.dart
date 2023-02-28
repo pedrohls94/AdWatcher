@@ -1,10 +1,9 @@
 import 'package:adwatcher/controller/database.dart';
-import 'package:adwatcher/controller/redux/middleware.dart';
 import 'package:adwatcher/controller/redux/reducer.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
 import 'package:adwatcher/util/abstract_factory.dart';
-import 'package:adwatcher/view/create_character.dart';
+import 'package:adwatcher/view/character_creation/create_character.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +21,10 @@ void main() {
     middleware: [],
   );
 
-  StreamProvider<T> fromStoreProvider<T>(T Function(AppState appState) convert) {
+  StreamProvider<T> createStreamProvider<T>(T Function(AppState appState) convert) {
     return StreamProvider<T>(
       lazy: false,
-      updateShouldNotify: (a, b) => !const DeepCollectionEquality().equals(a, b),
+      updateShouldNotify: (one, other) => !const DeepCollectionEquality().equals(one, other),
       create: (_) => store.onChange.map(convert),
       initialData: convert(store.state),
     );
@@ -39,7 +38,7 @@ void main() {
 
   final widget = MultiProvider(
     providers: [
-      fromStoreProvider((appState) => appState.character),
+      createStreamProvider((appState) => appState.character),
       Provider.value(value: store),
     ],
     child: const MyApp(),

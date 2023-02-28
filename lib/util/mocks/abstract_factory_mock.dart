@@ -5,6 +5,6 @@ import 'package:adwatcher/util/mocks/database_mock.dart';
 class AbstractFactoryMock implements AbstractFactory {
   @override
   AdWatcherDatabase getDatabase() {
-    return AdWatcherDatabaseMock();
+    return AdWatcherDatabaseMock.sharedInstance();
   }
 }

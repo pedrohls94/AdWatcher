@@ -2,6 +2,7 @@ import 'package:adwatcher/controller/redux/action.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/role.dart';
 import 'package:adwatcher/view/asset_providers/image_asset_provider.dart';
+import 'package:adwatcher/view/character_creation/class_selection_buttons.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,13 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             characterNameTextField,
-            characterSelectionButtons,
+            ClassSelectionButtons(
+                selectedRole: _selectedRole,
+                onChanged: (role) {
+                  setState(() {
+                    _selectedRole = role;
+                  });
+                }),
             buildCreateButton(context),
           ].addSpacing(size: 40),
         ),
@@ -66,43 +73,5 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
         );
       },
     );
-  }
-
-  Row get characterSelectionButtons {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: createClassButtons(),
-    );
-  }
-
-  List<Widget> createClassButtons() {
-    List<Role> leftClasses = [Role.paladin, Role.barbarian, Role.ranger];
-    List<Role> rightClasses = [Role.wizard, Role.druid, Role.bard];
-
-    return [
-      buildClassButtonsColumn(leftClasses),
-      buildClassButtonsColumn(rightClasses),
-    ];
-  }
-
-  Column buildClassButtonsColumn(List<Role> classes) {
-    List<Widget> buttons = [];
-    for (var role in classes) {
-      buttons.add(classButtonFor(
-          role: role,
-          isSelected: role == _selectedRole,
-          onPressed: () {
-            setState(() {
-              _selectedRole = role;
-            });
-          }));
-    }
-
-    return Column(children: buttons.addSpacing(size: 10));
-  }
-
-  ImageButton classButtonFor({required Role role, required bool isSelected, required void Function() onPressed}) {
-    AssetImage image = isSelected ? ImageAssetProvider.selectedBlueButton : ImageAssetProvider.blueButton;
-    return ImageButton(text: role.name, image: image, onPressed: onPressed);
   }
 }

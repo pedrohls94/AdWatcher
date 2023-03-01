@@ -1,8 +1,9 @@
 import 'package:adwatcher/model/role.dart';
-import 'package:adwatcher/view/asset_providers/image_asset_provider.dart';
+import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:adwatcher/util/extensions/list_extension.dart';
+import 'package:adwatcher/util/extensions/string_extension.dart';
 
 class ClassSelectionButtons extends StatelessWidget {
   const ClassSelectionButtons({super.key, required this.selectedRole, required this.onChanged});
@@ -43,6 +44,6 @@ class ClassSelectionButtons extends StatelessWidget {
 
   ImageButton classButtonFor({required Role role, required bool isSelected, required void Function() onPressed}) {
     AssetImage image = isSelected ? ImageAssetProvider.selectedBlueButton : ImageAssetProvider.blueButton;
-    return ImageButton(text: role.name, image: image, onPressed: onPressed);
+    return ImageButton(text: role.name.capitalize(), image: image, onPressed: onPressed);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:adwatcher/view/asset_providers/image_asset_provider.dart';
+import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:adwatcher/util/extensions/list_extension.dart';

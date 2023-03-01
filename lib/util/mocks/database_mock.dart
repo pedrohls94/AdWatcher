@@ -5,7 +5,7 @@ class AdWatcherDatabaseMock implements AdWatcherDatabase {
   Character? savedCharacter;
 
   @override
-  Character? fetchCharacter() {
+  Future<Character?> fetchCharacter() async {
     return savedCharacter;
   }
 

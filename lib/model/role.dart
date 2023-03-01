@@ -10,23 +10,6 @@ enum Role {
 }
 
 extension RoleExtension on Role {
-  String get name {
-    switch (this) {
-      case Role.paladin:
-        return "Paladin";
-      case Role.barbarian:
-        return "Barbarian";
-      case Role.ranger:
-        return "Ranger";
-      case Role.wizard:
-        return "Wizard";
-      case Role.druid:
-        return "Druid";
-      case Role.bard:
-        return "Bard";
-    }
-  }
-
   Map<Attribute, int> get startingAttributes {
     Map<Attribute, int> attributes = {
       Attribute.strength: 5,
@@ -65,5 +48,25 @@ extension RoleExtension on Role {
     }
 
     return attributes;
+  }
+}
+
+class RoleFactory {
+  static Role fromName(String name) {
+    if (name == Role.paladin.name) {
+      return Role.paladin;
+    } else if (name == Role.barbarian.name) {
+      return Role.barbarian;
+    } else if (name == Role.ranger.name) {
+      return Role.ranger;
+    } else if (name == Role.wizard.name) {
+      return Role.wizard;
+    } else if (name == Role.druid.name) {
+      return Role.druid;
+    } else if (name == Role.bard.name) {
+      return Role.bard;
+    } else {
+      throw UnimplementedError();
+    }
   }
 }

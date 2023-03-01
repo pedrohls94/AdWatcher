@@ -2,13 +2,12 @@ import 'package:adwatcher/model/attribute.dart';
 import 'package:adwatcher/model/role.dart';
 
 class Character {
-  String? id;
   String name;
   Role role;
   int exp;
   Map<Attribute, int> attributes;
 
-  Character({this.id, required this.name, required this.role, required this.exp, required this.attributes});
+  Character({required this.name, required this.role, required this.exp, required this.attributes});
   Character.newlyCreated({required this.name, required this.role})
       : exp = 0,
         attributes = role.startingAttributes;

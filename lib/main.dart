@@ -13,12 +13,12 @@ import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 void main() async {
-  FactoryProvider.initFactoryProvider(await AbstractFactoryMock.createFactory());
-  // FactoryProvider.initFactoryProvider(await AbstractFactorySP.createFactory());
+  // FactoryProvider.initFactoryProvider(await AbstractFactoryMock.createFactory());
+  FactoryProvider.initFactoryProvider(await AbstractFactorySP.createFactory());
 
   AdWatcherDatabase database = FactoryProvider.factory.getDatabase();
   AppState state = AppState();
-  state.character = database.fetchCharacter();
+  state.character = await database.fetchCharacter();
 
   final store = Store<AppState>(
     reducer,

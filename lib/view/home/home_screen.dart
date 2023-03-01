@@ -1,7 +1,7 @@
 import 'package:adwatcher/controller/redux/action.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
-import 'package:adwatcher/view/asset_providers/image_asset_provider.dart';
+import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/character_attributes.dart';
 import 'package:adwatcher/view/home/character_level.dart';
@@ -41,7 +41,7 @@ class CharacterImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("dummy.png");
+    return ImageAssetProvider.dummy;
   }
 }
 

@@ -13,7 +13,8 @@ import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 void main() async {
-  // FactoryProvider.initFactoryProvider(await AbstractFactoryMock.createFactory());
+  WidgetsFlutterBinding.ensureInitialized();
+
   FactoryProvider.initFactoryProvider(await AbstractFactorySP.createFactory());
 
   AdWatcherDatabase database = FactoryProvider.factory.getDatabase();

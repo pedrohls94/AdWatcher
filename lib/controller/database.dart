@@ -1,6 +1,6 @@
 import 'package:adwatcher/model/character.dart';
 
 abstract class AdWatcherDatabase {
-  Future<Character?> fetchCharacter();
+  Character? fetchCharacter();
   void saveCharacter(Character character);
 }

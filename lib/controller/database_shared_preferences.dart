@@ -18,7 +18,7 @@ class AdWatcherSharedPreferencesDatabase implements AdWatcherDatabase {
   final characterAttributesKey = "characterAttribute-";
 
   @override
-  Future<Character?> fetchCharacter() async {
+  Character? fetchCharacter() {
     final name = prefs.getString(characterNameKey);
     final roleName = prefs.getString(characterRoleKey);
     final exp = prefs.getInt(characterExpKey);

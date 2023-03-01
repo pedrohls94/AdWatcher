@@ -4,7 +4,6 @@ import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
 import 'package:adwatcher/util/abstract_factory.dart';
 import 'package:adwatcher/util/abstract_factory_sp.dart';
-import 'package:adwatcher/util/mocks/abstract_factory_mock.dart';
 import 'package:adwatcher/view/character_creation/create_character.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:collection/collection.dart';
@@ -19,7 +18,7 @@ void main() async {
 
   AdWatcherDatabase database = FactoryProvider.factory.getDatabase();
   AppState state = AppState();
-  state.character = await database.fetchCharacter();
+  state.character = database.fetchCharacter();
 
   final store = Store<AppState>(
     reducer,

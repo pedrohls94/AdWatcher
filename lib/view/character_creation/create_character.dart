@@ -65,7 +65,7 @@ class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
       image: ImageAssetProvider.greenButton,
       onPressed: () {
         context
-            .read<Store<AppState>>()
+            .read<Store<AdWatcherState>>()
             .dispatch(CreateCharacterAction(name: nameTextEditingController.text, role: _selectedRole));
         Navigator.push(
           context,

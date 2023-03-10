@@ -1,7 +1,7 @@
 import 'package:adwatcher/model/character.dart';
 
-class AppState {
+class AdWatcherState {
   Character? character;
 
-  AppState({this.character});
+  AdWatcherState({this.character});
 }

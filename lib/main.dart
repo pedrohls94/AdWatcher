@@ -8,25 +8,27 @@ import 'package:adwatcher/view/character_creation/create_character.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
 
   FactoryProvider.initFactoryProvider(await AbstractFactorySP.createFactory());
 
   AdWatcherDatabase database = FactoryProvider.factory.getDatabase();
-  AppState state = AppState();
+  AdWatcherState state = AdWatcherState();
   state.character = database.fetchCharacter();
 
-  final store = Store<AppState>(
+  final store = Store<AdWatcherState>(
     reducer,
     initialState: state,
     middleware: [],
   );
 
-  StreamProvider<T> createStreamProvider<T>(T Function(AppState appState) convert) {
+  StreamProvider<T> createStreamProvider<T>(T Function(AdWatcherState appState) convert) {
     return StreamProvider<T>(
       lazy: false,
       updateShouldNotify: (one, other) => !const DeepCollectionEquality().equals(one, other),

@@ -1,3 +1,4 @@
+import 'package:adwatcher/controller/ad_controller.dart';
 import 'package:adwatcher/controller/redux/action.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
@@ -65,10 +66,11 @@ class CharacterHeader extends StatelessWidget {
 
 class HomeScreenButtons extends StatelessWidget {
   HomeScreenButtons({super.key});
+  final adController = AdController();
 
   @override
   Widget build(BuildContext context) {
-    _createRewardedAd();
+    adController.createRewardedAd();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -76,7 +78,7 @@ class HomeScreenButtons extends StatelessWidget {
           text: "Play",
           image: ImageAssetProvider.greenButton,
           onPressed: () {
-            _showRewardedAd(() {
+            adController.showRewardedAd(() {
               context.read<Store<AdWatcherState>>().dispatch(AddExperiencePoints(exp: 4));
             });
           },
@@ -84,59 +86,5 @@ class HomeScreenButtons extends StatelessWidget {
         ImageButton(text: "Achievements", image: ImageAssetProvider.blueButton),
       ],
     );
-  }
-
-  static final AdRequest request = AdRequest();
-
-  RewardedAd? _rewardedAd;
-  int _numRewardedLoadAttempts = 0;
-  int maxFailedLoadAttempts = 1;
-
-  void _createRewardedAd() {
-    RewardedAd.load(
-      adUnitId: AdHelper.testingAdUnitId,
-      request: request,
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (RewardedAd ad) {
-          print('$ad loaded.');
-          _rewardedAd = ad;
-          _numRewardedLoadAttempts = 0;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          print('RewardedAd failed to load: $error');
-          _rewardedAd = null;
-          _numRewardedLoadAttempts += 1;
-          if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
-            _createRewardedAd();
-          }
-        },
-      ),
-    );
-  }
-
-  void _showRewardedAd(void Function() onReward) {
-    if (_rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
-      return;
-    }
-    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) => print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (RewardedAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
-        _createRewardedAd();
-      },
-      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        _createRewardedAd();
-      },
-    );
-
-    _rewardedAd!.setImmersiveMode(true);
-    _rewardedAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-      onReward();
-    });
-    _rewardedAd = null;
   }
 }

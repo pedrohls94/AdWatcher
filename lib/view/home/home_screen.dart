@@ -1,6 +1,8 @@
+import 'package:adwatcher/controller/ad_controller.dart';
 import 'package:adwatcher/controller/redux/action.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
+import 'package:adwatcher/util/ad_helper.dart';
 import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/character_attributes.dart';
@@ -8,6 +10,7 @@ import 'package:adwatcher/view/home/character_level.dart';
 import 'package:flutter/material.dart';
 import 'package:adwatcher/util/extensions/list_extension.dart';
 import 'package:adwatcher/util/extensions/string_extension.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
@@ -27,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               CharacterAttributes(attributes: character.attributes),
               CharacterLevel(viewModel: CharacterLevelViewModel(character.exp)),
               const SizedBox(height: 10),
-              const HomeScreenButtons(),
+              HomeScreenButtons(),
             ].addSpacing(size: 15),
           ),
         ),
@@ -62,10 +65,12 @@ class CharacterHeader extends StatelessWidget {
 }
 
 class HomeScreenButtons extends StatelessWidget {
-  const HomeScreenButtons({super.key});
+  HomeScreenButtons({super.key});
+  final adController = AdController();
 
   @override
   Widget build(BuildContext context) {
+    adController.createRewardedAd();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -73,7 +78,9 @@ class HomeScreenButtons extends StatelessWidget {
           text: "Play",
           image: ImageAssetProvider.greenButton,
           onPressed: () {
-            context.read<Store<AppState>>().dispatch(AddExperiencePoints(exp: 4));
+            adController.showRewardedAd(() {
+              context.read<Store<AdWatcherState>>().dispatch(AddExperiencePoints(exp: 4));
+            });
           },
         ),
         ImageButton(text: "Achievements", image: ImageAssetProvider.blueButton),

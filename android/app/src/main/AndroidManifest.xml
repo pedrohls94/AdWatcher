@@ -18,6 +18,7 @@
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
+              android:value="ca-app-pub-1659380120025565/2153069168"
               android:resource="@style/NormalTheme"
               />
             <intent-filter>
@@ -30,5 +31,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+              android:name="com.google.android.gms.ads.APPLICATION_ID"
+              android:value="ca-app-pub-1659380120025565~2153069168"
+              />
     </application>
 </manifest>

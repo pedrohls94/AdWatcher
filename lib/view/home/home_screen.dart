@@ -14,31 +14,8 @@ import 'package:adwatcher/util/extensions/string_extension.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() {
-    return _HomeScreenState();
-  }
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int? currentLevel;
-
-  // @override
-  // void didChangeDependencies() {
-  //   final stateCharacter = context.watch<Character>();
-  //   if (currentLevel != null && currentLevel! < stateCharacter.level) {
-  //     Navigator.push(
-  //       context,
-  //       PageRouteBuilder(pageBuilder: (_, __, ___) => const LevelUpScreen()),
-  //     );
-  //   }
-  //   currentLevel = stateCharacter.level;
-
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {

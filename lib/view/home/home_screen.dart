@@ -2,20 +2,43 @@ import 'package:adwatcher/controller/ad_controller.dart';
 import 'package:adwatcher/controller/redux/action.dart';
 import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
-import 'package:adwatcher/util/ad_helper.dart';
 import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/character_attributes.dart';
 import 'package:adwatcher/view/home/character_level.dart';
+import 'package:adwatcher/view/rewards/level_up_screen.dart';
+import 'package:adwatcher/view/rewards/rewards_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adwatcher/util/extensions/list_extension.dart';
 import 'package:adwatcher/util/extensions/string_extension.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() {
+    return _HomeScreenState();
+  }
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int? currentLevel;
+
+  // @override
+  // void didChangeDependencies() {
+  //   final stateCharacter = context.watch<Character>();
+  //   if (currentLevel != null && currentLevel! < stateCharacter.level) {
+  //     Navigator.push(
+  //       context,
+  //       PageRouteBuilder(pageBuilder: (_, __, ___) => const LevelUpScreen()),
+  //     );
+  //   }
+  //   currentLevel = stateCharacter.level;
+
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +51,9 @@ class HomeScreen extends StatelessWidget {
               const CharacterImage(),
               CharacterHeader(characterName: character.name, className: character.role.name.capitalize()),
               CharacterAttributes(attributes: character.attributes),
-              CharacterLevel(viewModel: CharacterLevelViewModel(character.exp)),
+              CharacterLevel(viewModel: CharacterLevelViewModel(character)),
               const SizedBox(height: 10),
-              HomeScreenButtons(),
+              HomeScreenButtons(character: character),
             ].addSpacing(size: 15),
           ),
         ),
@@ -65,7 +88,8 @@ class CharacterHeader extends StatelessWidget {
 }
 
 class HomeScreenButtons extends StatelessWidget {
-  HomeScreenButtons({super.key});
+  HomeScreenButtons({super.key, required this.character});
+  final Character character;
   final adController = AdController();
 
   @override
@@ -79,7 +103,11 @@ class HomeScreenButtons extends StatelessWidget {
           image: ImageAssetProvider.greenButton,
           onPressed: () {
             adController.showRewardedAd(() {
-              context.read<Store<AdWatcherState>>().dispatch(AddExperiencePoints(exp: 4));
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => const RewardsScreen()),
+              );
             });
           },
         ),

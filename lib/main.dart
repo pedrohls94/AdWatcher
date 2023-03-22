@@ -4,7 +4,7 @@ import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
 import 'package:adwatcher/util/abstract_factory.dart';
 import 'package:adwatcher/util/abstract_factory_sp.dart';
-import 'package:adwatcher/view/character_creation/create_character.dart';
+import 'package:adwatcher/view/character_creation/character_creation_screen.dart';
 import 'package:adwatcher/view/home/home_screen.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Consumer<Character?>(builder: (BuildContext context, character, Widget? child) {
-        return character == null ? const CreateCharacterScreen() : const HomeScreen();
+        return character == null ? const CharacterCreationScreen() : const HomeScreen();
       }),
     );
   }

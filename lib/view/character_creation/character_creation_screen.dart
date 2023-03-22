@@ -11,14 +11,14 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
-class CreateCharacterScreen extends StatefulWidget {
-  const CreateCharacterScreen({super.key});
+class CharacterCreationScreen extends StatefulWidget {
+  const CharacterCreationScreen({super.key});
 
   @override
-  State<CreateCharacterScreen> createState() => _CreateCharacterScreenState();
+  State<CharacterCreationScreen> createState() => _CharacterCreationScreenState();
 }
 
-class _CreateCharacterScreenState extends State<CreateCharacterScreen> {
+class _CharacterCreationScreenState extends State<CharacterCreationScreen> {
   final nameTextEditingController = TextEditingController();
   Role _selectedRole = Role.paladin;
 

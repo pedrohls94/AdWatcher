@@ -1,3 +1,4 @@
+import 'package:adwatcher/model/attribute.dart';
 import 'package:adwatcher/model/role.dart';
 
 class CreateCharacterAction {
@@ -10,4 +11,9 @@ class CreateCharacterAction {
 class AddExperiencePoints {
   int exp;
   AddExperiencePoints({required this.exp});
+}
+
+class IncreaseAttribute {
+  Attribute attribute;
+  IncreaseAttribute({required this.attribute});
 }

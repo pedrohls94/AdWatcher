@@ -1,18 +1,15 @@
 import 'package:adwatcher/controller/ad_controller.dart';
-import 'package:adwatcher/controller/redux/action.dart';
-import 'package:adwatcher/controller/redux/state.dart';
 import 'package:adwatcher/model/character.dart';
+import 'package:adwatcher/model/role.dart';
 import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/character_attributes.dart';
 import 'package:adwatcher/view/home/character_level.dart';
-import 'package:adwatcher/view/rewards/level_up_screen.dart';
 import 'package:adwatcher/view/rewards/rewards_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adwatcher/util/extensions/list_extension.dart';
 import 'package:adwatcher/util/extensions/string_extension.dart';
 import 'package:provider/provider.dart';
-import 'package:redux/redux.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,7 +22,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CharacterImage(),
+              ImageAssetProvider.charImages[character.role]!,
               CharacterHeader(characterName: character.name, className: character.role.name.capitalize()),
               CharacterAttributes(attributes: character.attributes),
               CharacterLevel(viewModel: CharacterLevelViewModel(character)),
@@ -36,15 +33,6 @@ class HomeScreen extends StatelessWidget {
         ),
       );
     });
-  }
-}
-
-class CharacterImage extends StatelessWidget {
-  const CharacterImage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ImageAssetProvider.dummy;
   }
 }
 
@@ -82,8 +70,7 @@ class HomeScreenButtons extends StatelessWidget {
             adController.showRewardedAd(() {
               Navigator.push(
                 context,
-                PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => const RewardsScreen()),
+                PageRouteBuilder(pageBuilder: (_, __, ___) => const RewardsScreen()),
               );
             });
           },

@@ -1,6 +1,5 @@
 import 'package:adwatcher/controller/ad_controller.dart';
 import 'package:adwatcher/model/character.dart';
-import 'package:adwatcher/model/role.dart';
 import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/character_attributes.dart';

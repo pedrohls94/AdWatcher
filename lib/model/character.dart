@@ -36,6 +36,15 @@ class Character {
     return name.hashCode ^ role.hashCode ^ exp.hashCode ^ attributes.hashCode;
   }
 
+  ///  Level progression:
+  ///  The amount of experience points required to reach a level N is defined by an arithmetic progression, where:
+  ///  EXP required to reach level 1: a1 = 10
+  ///  Difference in EXP required to reach each subsequent level: d = 10
+  ///  
+  ///  Formulas:
+  ///  EXP needed to level up from n-1 to n: an = a1 + (n - 1)*d = 10 + (n - 1)*10
+  ///  Total EXP required for a character to be at level n: Sn = n/2 * (n+1)*10 = 5n² + 5n
+  ///  Function to find character level based on total EXP: f(n) = 5n² + 5n - exp
   void initCalculatedVariables() {
     num delta = (25 + 20 * exp).abs();
     num x = (-5 + sqrt(delta)) / 10;
@@ -45,20 +54,5 @@ class Character {
 
     num expNeededToCurrentLevel = 5 * pow(level, 2) + 5 * level;
     currentLevelExp = exp - expNeededToCurrentLevel.floor();
-
-    /*
-    a1 = 10
-    d = 10
-    an = a1 + (n-1)*10
-
-    Sn = n/2 * (n+1)*10
-
-    Sn = n*(n+1)*5 = 5n²+5n
-    f(x) = 5n²+5n-sum
-
-    delta = 25 + 20sum
-    x1 = (-5+(25+20sum)^(1/2))/10
-    x2 = (-5-(25+20sum)^(1/2))/10
-    */
   }
 }

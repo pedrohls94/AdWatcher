@@ -2,23 +2,27 @@ import 'package:adwatcher/model/attribute.dart';
 import 'package:adwatcher/model/role.dart';
 import 'dart:math';
 
+import 'package:adwatcher/model/statistics.dart';
+
 class Character {
   String name;
   Role role;
   int exp;
   Map<Attribute, int> attributes;
+  Statistics statistics;
 
   late int level;
   late int expToNextLevel;
   late int currentLevelExp;
 
-  Character({required this.name, required this.role, required this.exp, required this.attributes}) {
+  Character({required this.name, required this.role, required this.exp, required this.attributes, required this.statistics}) {
     initCalculatedVariables();
   }
 
   Character.newlyCreated({required this.name, required this.role})
       : exp = 0,
-        attributes = role.startingAttributes {
+        attributes = role.startingAttributes,
+        statistics = Statistics() {
     initCalculatedVariables();
   }
 
@@ -32,7 +36,7 @@ class Character {
     return name.hashCode ^ role.hashCode ^ exp.hashCode ^ attributes.hashCode;
   }
 
-  initCalculatedVariables() {
+  void initCalculatedVariables() {
     num delta = (25 + 20 * exp).abs();
     num x = (-5 + sqrt(delta)) / 10;
 

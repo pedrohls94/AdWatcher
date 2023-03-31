@@ -8,9 +8,8 @@ class CreateCharacterAction {
   CreateCharacterAction({required this.name, required this.role});
 }
 
-class AddExperiencePoints {
-  int exp;
-  AddExperiencePoints({required this.exp});
+class HandOutAdRewards {
+  HandOutAdRewards();
 }
 
 class IncreaseAttribute {

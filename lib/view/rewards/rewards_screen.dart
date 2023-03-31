@@ -37,7 +37,7 @@ class RewardsScreen extends StatelessWidget {
                     Navigator.pop(context);
                   }
 
-                  context.read<Store<AdWatcherState>>().dispatch(AddExperiencePoints(exp: xpGained));
+                  context.read<Store<AdWatcherState>>().dispatch(HandOutAdRewards());
                 },
               ),
             ].addSpacing(size: 30),

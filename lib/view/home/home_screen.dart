@@ -1,6 +1,7 @@
 import 'package:adwatcher/controller/ad_controller.dart';
 import 'package:adwatcher/model/character.dart';
 import 'package:adwatcher/util/asset_providers/image_asset_provider.dart';
+import 'package:adwatcher/view/achievements_screen.dart';
 import 'package:adwatcher/view/custom_widgets/button.dart';
 import 'package:adwatcher/view/home/character_attributes.dart';
 import 'package:adwatcher/view/home/character_level.dart';
@@ -66,15 +67,24 @@ class HomeScreenButtons extends StatelessWidget {
           text: "Play",
           image: ImageAssetProvider.greenButton,
           onPressed: () {
-            adController.showRewardedAd(() {
+            // adController.showRewardedAd(() {
               Navigator.push(
                 context,
                 PageRouteBuilder(pageBuilder: (_, __, ___) => const RewardsScreen()),
               );
-            });
+            // });
           },
         ),
-        ImageButton(text: "Achievements", image: ImageAssetProvider.blueButton),
+        ImageButton(
+          text: "Achievements",
+          image: ImageAssetProvider.blueButton,
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(pageBuilder: (_, __, ___) => AchievementsScreen(character: character)),
+            );
+          },
+        ),
       ],
     );
   }

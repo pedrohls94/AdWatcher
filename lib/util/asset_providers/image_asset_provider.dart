@@ -9,6 +9,8 @@ class ImageAssetProvider {
 
   static Image barbarian = Image.asset("assets/dummy.png");
   static Image xpBarOutline = Image.asset("assets/xp_bar_outline.png");
+  static Image achievementCardGray = Image.asset("assets/achievement_card_gray.png");
+  static Image achievementCardCompleted = Image.asset("assets/achievement_card_completed.png");
 
   static Map<Role, Image> charImages = {
     Role.barbarian: Image.asset("assets/char_barbarian.png"),

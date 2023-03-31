@@ -9,35 +9,7 @@ class Achievement {
 }
 
 class AchievementLibrary {
-  List<Achievement> achievements = [
-    Achievement(
-      title: "Did you even click on any of those?",
-      description: "Watch a total of 30 ads",
-      condition: (character) {
-        return character.statistics.adsWatched >= 25;
-      },
-    ),
-    Achievement(
-      title: "Did you like any of those?",
-      description: "Watch a total of 70 ads",
-      condition: (character) {
-        return character.statistics.adsWatched >= 70;
-      },
-    ),
-    Achievement(
-      title: "You are my hero.",
-      description: "Watch a total of 1000 ads",
-      condition: (character) {
-        return character.statistics.adsWatched >= 1000;
-      },
-    ),
-    Achievement(
-      title: "You are working!",
-      description: "Watch 8 ads in a single day",
-      condition: (character) {
-        return character.statistics.mostAdsWatchedInASingleDay >= 8;
-      },
-    ),
+  static List<Achievement> achievements = [
     Achievement(
       title: "You are working!",
       description: "Watch 8 ads in a single day",
@@ -60,14 +32,35 @@ class AchievementLibrary {
       },
     ),
     Achievement(
-      title: "You are feeling powerful now!",
+      title: "Did you click on any of them?",
+      description: "Watch a total of 50 ads",
+      condition: (character) {
+        return character.statistics.adsWatched >= 50;
+      },
+    ),
+    Achievement(
+      title: "I think you like this!",
+      description: "Watch a total of 100 ads",
+      condition: (character) {
+        return character.statistics.adsWatched >= 100;
+      },
+    ),
+    Achievement(
+      title: "You are my hero.",
+      description: "Watch a total of 1000 ads",
+      condition: (character) {
+        return character.statistics.adsWatched >= 1000;
+      },
+    ),
+    Achievement(
+      title: "You feel incredibly strong!",
       description: "Reach character level 5",
       condition: (character) {
         return character.level >= 5;
       },
     ),
     Achievement(
-      title: "I'm pretty sure you can fight a dragon already",
+      title: "I'm pretty sure you can fight a dragon.",
       description: "Reach character level 10",
       condition: (character) {
         return character.level >= 10;

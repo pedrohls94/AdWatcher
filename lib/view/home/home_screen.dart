@@ -67,12 +67,12 @@ class HomeScreenButtons extends StatelessWidget {
           text: "Play",
           image: ImageAssetProvider.greenButton,
           onPressed: () {
-            // adController.showRewardedAd(() {
+            adController.showRewardedAd(() {
               Navigator.push(
                 context,
                 PageRouteBuilder(pageBuilder: (_, __, ___) => const RewardsScreen()),
               );
-            // });
+            });
           },
         ),
         ImageButton(

@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
         ).apply(bodyColor: const Color(0xFF000000)),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.resolveWith((state) => const Color(0xFFDBD7D2)),
+            foregroundColor: MaterialStateProperty.resolveWith((state) => const Color(0xFF000000)),//0xFFDBD7D2)),
           ),
         ),
       ),

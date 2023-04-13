@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.adwatcher">
    <application
-        android:label="adwatcher"
+        android:label="Ad Watcher"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -36,4 +36,5 @@
               android:value="ca-app-pub-1659380120025565~2153069168"
               />
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -10,7 +10,7 @@ class AdController {
 
   void createRewardedAd() {
     RewardedAd.load(
-      adUnitId: AdHelper.testingAdUnitId,
+      adUnitId: AdHelper.realAdUnitid,
       request: request,
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (RewardedAd ad) {
